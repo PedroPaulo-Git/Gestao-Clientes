@@ -1,4 +1,5 @@
 from flask import Blueprint,render_template
+from database.cliente import CLIENTS
 
 client_route = Blueprint('client_route',__name__)
 """
@@ -6,15 +7,15 @@ client routes
     
     - /clients/(GET)
      - /clients/(POST)
-     - /clients/new - render form to create c;ient
-     - /clients/<id> - get once client by id
-      - /clients/<id>/edit - 
-       - /clients/<id>/update (PUT)
-        - /clients/<id>/delete -(DELETE) delete client
+      - /clients/new - render form to create c;ient
+       - /clients/<id> - get once client by id
+        - /clients/<id>/edit - 
+         - /clients/<id>/update (PUT)
+          - /clients/<id>/delete -(DELETE) delete client
 """
 @client_route.route('/')
 def client_list():
-    return {'page':'client list'}
+    return render_template('clientlist.html',clients=CLIENTS)
 
 
 
@@ -28,20 +29,20 @@ def client_insert():
 @client_route.route('/new',methods=['GET'])
 #create client
 def client_create():
-    return {'page':'client create'}
+    return render_template('clientform.html')
 
 
 @client_route.route('/<int:client_id>')
 #show client info
 def client_details():
-    return {'page':'client details'}
+    return render_template('clientdetails.html')
 
 
 
 @client_route.route('/<int:client_id>/edit')
 #edit form client
 def client_edit():
-    return {'page':'client edit'}
+    return render_template('clienteditform.html')
 
 
 @client_route.route('/<int:client_id>/update',methods=['PUT'])
